@@ -15,10 +15,11 @@
       <li>Вибір цілі: схуднення / підтримка / набір</li>
       <li>Розрахунок макросів і діаграма</li>
       <li>Світла/темна тема</li>
-      <li></li>
     </ul>
 
-    <p><b>Технології:</b> Vue 3, Vite, HTML, CSS, JavaScript, </p>
+    <p><b>Технології:
+      Vue 3, Vite, HTML, CSS, JavaScript, </b> Vue 3, Vite, HTML, CSS, JavaScript, </p>
+    </b> Vue 3, Vite, HTML, CSS, JavaScript, </p>
   </section>
 </div>
 </template>
