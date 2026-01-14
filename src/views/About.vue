@@ -16,14 +16,11 @@
       <li>Розрахунок макросів і діаграма</li>
       <li>Світла/темна тема</li>
     </ul>
-
     <p><b>Технології:
-      
     </b> Vue 3, Vite, HTML, CSS, JavaScript, </p>
   </section>
 </div>
 </template>
-
 <style scoped>
 .page{width:100%;margin:0;padding:0 2px}
 h1{margin:0 0 14px 0}
