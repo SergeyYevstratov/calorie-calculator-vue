@@ -18,7 +18,7 @@
     </ul>
 
     <p><b>Технології:
-      Vue 3, Vite, HTML, CSS, JavaScript, </b> Vue 3, Vite, HTML, CSS, JavaScript, </p>
+      
     </b> Vue 3, Vite, HTML, CSS, JavaScript, </p>
   </section>
 </div>
