@@ -16,7 +16,7 @@
         <!-- desktop/tablet nav -->
         <nav class="nav desktopNav">
           <RouterLink to="/auth" class="navbtn" v-if="!user">Увійти</RouterLink>
-          <RouterLink to="/" class="navbtn">Головна</RouterLink>
+          <RouterLink to="/" class="navbtn">Калькулятор</RouterLink>
           <RouterLink to="/info" class="navbtn">Пояснення</RouterLink>
 
           <button
@@ -96,7 +96,7 @@
         <!-- ПРАВОРУЧ: 2026 -> На головну -> Про проєкт -->
         <div class="footerNav">
           <span class="copy">© 2026</span>
-          <RouterLink class="fLink" to="/">На головну</RouterLink>
+          <RouterLink class="fLink" to="/">Калькулятор</RouterLink>
           <RouterLink class="fLink" to="/about">Про проєкт</RouterLink>
         </div>
       </div>
