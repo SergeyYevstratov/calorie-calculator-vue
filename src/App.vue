@@ -1,90 +1,107 @@
 <template>
-<div :class="['app', theme]">
+  <div :class="['app', theme]">
+    <!-- HEADER -->
     <header class="header">
-    <div class="container headerRow">
-      <div class="left">
-        <LogoMark class="logoImg" />
-        <div class="brand">
-          <div class="title">Калькулятор Калорій</div>
-</div>
-      </div>
+      <div class="container headerRow">
+        <div class="left">
+          <!-- Лого + назва = посилання на головну -->
+          <RouterLink to="/" class="brandLink">
+            <LogoMark class="logoImg" />
+            <div class="brand">
+              <div class="title">Калькулятор Калорій</div>
+            </div>
+          </RouterLink>
+        </div>
 
-      <!-- desktop/tablet nav -->
-      <nav class="nav desktopNav">
-        <RouterLink to="/auth" class="navbtn" v-if="!user">Увійти</RouterLink>
-        <RouterLink to="/" class="navbtn">Головна</RouterLink>
-        <RouterLink to="/info" class="navbtn">Пояснення</RouterLink>
-        
-        <button class="navbtn icon" @click="toggleTheme" :title="theme==='light' ? 'Темна тема' : 'Світла тема'">
-          {{ theme === 'light' ? '🌙' : '☀️' }}
+        <!-- desktop/tablet nav -->
+        <nav class="nav desktopNav">
+          <RouterLink to="/auth" class="navbtn" v-if="!user">Увійти</RouterLink>
+          <RouterLink to="/" class="navbtn">Головна</RouterLink>
+          <RouterLink to="/info" class="navbtn">Пояснення</RouterLink>
+
+          <button
+            class="navbtn icon"
+            @click="toggleTheme"
+            :title="theme==='light' ? 'Темна тема' : 'Світла тема'"
+          >
+            {{ theme === 'light' ? '🌙' : '☀️' }}
+          </button>
+
+          <div class="userChip" v-if="user">
+            <span class="dot"></span>
+            <span class="name">{{ user.name }}</span>
+          </div>
+
+          <button class="navbtn" v-if="user" @click="doLogout">Вийти</button>
+        </nav>
+
+        <!-- mobile burger -->
+        <button class="burger" @click="mobileOpen = true" aria-label="Меню">
+          <span></span><span></span><span></span>
         </button>
+      </div>
 
-        <div class="userChip" v-if="user">
-          <span class="dot"></span>
-          <span class="name">{{ user.name }}</span>
+      <!-- mobile drawer -->
+      <div class="backdrop" v-if="mobileOpen" @click="mobileOpen=false"></div>
+      <aside class="drawer" :class="{open: mobileOpen}" @click.stop>
+        <div class="drawerHead">
+          <!-- Лого + назва = посилання на головну + закриває меню -->
+          <RouterLink to="/" class="drawerBrand" @click="mobileOpen=false">
+            <LogoMark class="logoSm" />
+            <div>
+              <div class="dTitle">Калькулятор Калорій</div>
+              <div class="dSub">Меню</div>
+            </div>
+          </RouterLink>
+
+          <button class="close" @click="mobileOpen=false" aria-label="Закрити">✕</button>
         </div>
 
-        <button class="navbtn" v-if="user" @click="doLogout">Вийти</button>
-      </nav>
-
-      <!-- mobile burger -->
-      <button class="burger" @click="mobileOpen = true" aria-label="Меню">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-
-    <!-- mobile drawer -->
-    <div class="backdrop" v-if="mobileOpen" @click="mobileOpen=false"></div>
-    <aside class="drawer" :class="{open: mobileOpen}" @click.stop>
-      <div class="drawerHead">
-        <LogoMark class="logoSm" />
-        <div>
-          <div class="dTitle">Калькулятор Калорій</div>
-          <div class="dSub">Меню</div>
+        <div class="drawerLinks">
+          <RouterLink to="/" class="dLink" @click="mobileOpen=false">Головна</RouterLink>
+          <RouterLink to="/info" class="dLink" @click="mobileOpen=false">Пояснення</RouterLink>
+          <RouterLink to="/auth" class="dLink" v-if="!user" @click="mobileOpen=false">Увійти / Реєстрація</RouterLink>
+          <button class="dLink" v-if="user" @click="doLogout(); mobileOpen=false">Вийти</button>
         </div>
-        <button class="close" @click="mobileOpen=false" aria-label="Закрити">✕</button>
-      </div>
 
-      <div class="drawerLinks">
-        <RouterLink to="/" class="dLink" @click="mobileOpen=false">Головна</RouterLink>
-        <RouterLink to="/info" class="dLink" @click="mobileOpen=false">Пояснення</RouterLink>
-                <RouterLink to="/auth" class="dLink" v-if="!user" @click="mobileOpen=false">Увійти / Реєстрація</RouterLink>
-        <button class="dLink" v-if="user" @click="doLogout(); mobileOpen=false">Вийти</button>
-      </div>
+        <div class="drawerActions">
+          <button class="dAction" @click="toggleTheme">
+            {{ theme === 'light' ? 'Увімкнути темну тему' : 'Увімкнути світлу тему' }}
+          </button>
+          <div class="who" v-if="user">
+            Увійшов: <b>{{ user.name }}</b>
+          </div>
+        </div>
+      </aside>
+    </header>
 
-      <div class="drawerActions">
-        <button class="dAction" @click="toggleTheme">
-          {{ theme === 'light' ? 'Увімкнути темну тему' : 'Увімкнути світлу тему' }}
-        </button>
-        <div class="who" v-if="user">
-          Увійшов: <b>{{ user.name }}</b>
+    <!-- CONTENT -->
+    <main class="content">
+      <div class="container">
+        <router-view />
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="container footerRow">
+        <!-- Як у хедері: лого + назва (одна клікабельна зона) -->
+        <RouterLink to="/" class="brandLink brandLinkFooter">
+          <LogoMark class="logoSm" />
+          <div class="brand">
+            <div class="title">Калькулятор Калорій</div>
+          </div>
+        </RouterLink>
+
+        <!-- ПРАВОРУЧ: 2026 -> На головну -> Про проєкт -->
+        <div class="footerNav">
+          <span class="copy">© 2026</span>
+          <RouterLink class="fLink" to="/">На головну</RouterLink>
+          <RouterLink class="fLink" to="/about">Про проєкт</RouterLink>
         </div>
       </div>
-    </aside>
-  </header>
-
-  <main class="content">
-    <div class="container">
-      <router-view/>
-    </div>
-  </main>
-
-  <footer class="footer">
-    <div class="container footerRow">
-      <div class="fLeft">
-        <LogoMark class="logoSm" />
-        <div>
-          <div class="fTitle">Калькулятор Калорій</div>
-</div>
-      </div>
-      <div class="fRight">
-        <span>© 2026</span>
-        <RouterLink class="fLink" to="/about">Про проєкт</RouterLink>
-      </div>
-    </div>
-  </footer>
-
-</div>
+    </footer>
+  </div>
 </template>
 
 <script setup>
@@ -130,7 +147,7 @@ html,body,#app{height:100%;width:100%}
 body{margin:0;font-family:system-ui;background:var(--bg);color:var(--text)}
 .app{min-height:100vh;background:var(--bg);color:var(--text)}
 
-/* one source of truth for alignment */
+/* container */
 .container{
   max-width:1200px;
   margin:0 auto;
@@ -138,6 +155,7 @@ body{margin:0;font-family:system-ui;background:var(--bg);color:var(--text)}
   padding:0 22px;
 }
 
+/* HEADER */
 .header{
   position:sticky;top:0;z-index:10;
   background:var(--card);
@@ -150,12 +168,25 @@ body{margin:0;font-family:system-ui;background:var(--bg);color:var(--text)}
   gap:14px;
   padding:12px 0;
 }
-
 .left{display:flex;align-items:center;gap:12px;min-width:240px}
-.logoImg{width:42px;height:42px;border-radius:0;display:block;color:var(--text)}
-.brand .title{font-weight:950;font-size:18px;line-height:1}
-.brand .subtitle{font-size:12px;color:var(--muted);margin-top:3px}
 
+/* brand link (shared header + footer) */
+.brandLink{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  text-decoration:none;
+  color:inherit;
+  cursor:pointer;
+}
+.brandLink:hover{opacity:.9}
+
+.logoImg{width:42px;height:42px;border-radius:0;display:block;color:var(--text)}
+.logoSm{width:34px;height:34px;border-radius:0;display:block;color:var(--text)}
+
+.brand .title{font-weight:950;font-size:18px;line-height:1}
+
+/* NAV */
 .nav{
   display:flex;
   align-items:center;
@@ -164,7 +195,6 @@ body{margin:0;font-family:system-ui;background:var(--bg);color:var(--text)}
   flex-wrap:nowrap;
   max-width:100%;
 }
-/* scroll pills when space is tight */
 @media (max-width:980px){
   .nav{
     width:100%;
@@ -194,27 +224,64 @@ body{margin:0;font-family:system-ui;background:var(--bg);color:var(--text)}
 .userChip .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);display:inline-block}
 .userChip .name{max-width:160px;overflow:hidden;text-overflow:ellipsis}
 
-.content{padding:22px 0} /* horizontal padding via container */
+/* CONTENT */
+.content{padding:22px 0}
 
-/* mobile burger + drawer */
-.burger{display:none; border:1px solid var(--line); background:var(--btn); border-radius:12px; padding:10px; cursor:pointer; justify-self:end; margin-left:auto}
+/* burger + drawer */
+.burger{
+  display:none;
+  border:1px solid var(--line);
+  background:var(--btn);
+  border-radius:12px;
+  padding:10px;
+  cursor:pointer;
+  justify-self:end;
+  margin-left:auto
+}
 .burger span{display:block; width:18px; height:2px; background:var(--text); margin:3px 0; border-radius:999px}
 .desktopNav{display:flex}
 .backdrop{position:fixed; inset:0; background:rgba(0,0,0,.35); z-index:19}
-.drawer{position:fixed; top:0; right:-320px; width:320px; max-width:88vw; height:100vh; background:var(--card); border-left:1px solid var(--line); z-index:20; box-shadow:var(--shadow); transition:right .2s ease; display:flex; flex-direction:column}
+.drawer{
+  position:fixed; top:0; right:-320px;
+  width:320px; max-width:88vw; height:100vh;
+  background:var(--card); border-left:1px solid var(--line);
+  z-index:20; box-shadow:var(--shadow);
+  transition:right .2s ease;
+  display:flex; flex-direction:column
+}
 .drawer.open{right:0}
 .drawerHead{display:flex; align-items:center; gap:10px; padding:14px; border-bottom:1px solid var(--line)}
-.logoSm{width:34px;height:34px;border-radius:0;display:block;color:var(--text)}
+.drawerBrand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  color:inherit;
+  cursor:pointer;
+  min-width:0;
+}
+.drawerBrand:hover{opacity:.9}
 .dTitle{font-weight:950}
 .dSub{font-size:12px; color:var(--muted); margin-top:2px}
 .close{margin-left:auto; border:1px solid var(--line); background:var(--btn); border-radius:12px; padding:8px 10px; cursor:pointer}
 .drawerLinks{padding:12px; display:flex; flex-direction:column; gap:10px}
-.dLink{width:100%; text-align:left; text-decoration:none; color:var(--text); background:var(--btn); border:1px solid var(--line); padding:12px; border-radius:14px; font-weight:900; cursor:pointer}
+.dLink{
+  width:100%;
+  text-align:left;
+  text-decoration:none;
+  color:var(--text);
+  background:var(--btn);
+  border:1px solid var(--line);
+  padding:12px;
+  border-radius:14px;
+  font-weight:900;
+  cursor:pointer
+}
 .drawerActions{margin-top:auto; padding:12px; border-top:1px solid var(--line)}
 .dAction{width:100%; padding:12px; border-radius:14px; border:none; background:var(--accent); color:white; font-weight:950; cursor:pointer}
 .who{margin-top:10px; color:var(--muted); font-size:13px}
 
-
+/* FOOTER */
 .footer{
   background:var(--card);
   border-top:1px solid var(--line);
@@ -226,20 +293,31 @@ body{margin:0;font-family:system-ui;background:var(--bg);color:var(--text)}
   gap:14px;
   padding:12px 0;
 }
-.fLeft{display:flex;align-items:center;gap:12px;min-width:240px}
-.logoSm{width:34px;height:34px;border-radius:0;display:block}
-.fTitle{font-weight:950}
-.fSub{font-size:12px;color:var(--muted);margin-top:2px}
-.fRight{display:flex;align-items:center;gap:10px;color:var(--muted);font-weight:700;margin-left:auto;justify-content:flex-end}
-@media (max-width:420px){
-  .fRight{overflow:auto;flex-wrap:nowrap;width:100%;padding-bottom:2px;-webkit-overflow-scrolling:touch}
-  .fRight::-webkit-scrollbar{height:6px}
-  .fRight::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:999px}
+
+/* footer brand: same as header but smaller title */
+.brandLinkFooter .brand .title{font-size:16px}
+
+/* right footer nav */
+.footerNav{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-left:auto;
+  justify-content:flex-end;
+  color:var(--muted);
+  font-weight:700;
 }
-.fLink{color:var(--muted);text-decoration:none}
+.copy{color:var(--muted)}
+
+.fLink{
+  color:var(--muted);
+  text-decoration:none;
+  font-weight:700;
+  white-space:nowrap;
+}
 .fLink:hover{text-decoration:underline}
 
-
+/* RESPONSIVE */
 @media (min-width:1600px){
   .container{padding:0 28px}
 }
@@ -256,15 +334,12 @@ body{margin:0;font-family:system-ui;background:var(--bg);color:var(--text)}
   .burger{justify-self:end}
 
   .container{padding:0 14px}
-  .brand .subtitle{display:none}
   .brand .title{font-size:16px}
   .left{min-width:auto}
   .content{padding:14px 0}
 
-  /* footer: keep year + about on the right */
+  /* footer: brand on top, links below, aligned right */
   .footerRow{flex-wrap:wrap;align-items:flex-start}
-  .fLeft{min-width:auto}
-  .fRight{margin-left:auto;justify-content:flex-end;text-align:right}
+  .footerNav{width:100%;justify-content:flex-end;flex-wrap:wrap;gap:10px}
 }
-
 </style>
