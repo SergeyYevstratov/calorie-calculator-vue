@@ -7,8 +7,9 @@
           <!-- Лого + назва = посилання на головну -->
           <RouterLink to="/" class="brandLink">
             <LogoMark class="logoImg" />
-            <div class="brand">
-              <div class="title">Калькулятор Калорій</div>
+            <div class="brand brandStack">
+              <div class="title">FIERY</div>
+              <div class="subtitle">CALORIE</div>
             </div>
           </RouterLink>
         </div>
@@ -49,7 +50,7 @@
           <RouterLink to="/" class="drawerBrand" @click="mobileOpen=false">
             <LogoMark class="logoSm" />
             <div>
-              <div class="dTitle">Калькулятор Калорій</div>
+              <div class="dTitle brandStackMobile">FIERY<span>CALORIE</span></div>
               <div class="dSub">Меню</div>
             </div>
           </RouterLink>
@@ -88,8 +89,9 @@
         <!-- Як у хедері: лого + назва (одна клікабельна зона) -->
         <RouterLink to="/" class="brandLink brandLinkFooter">
           <LogoMark class="logoSm" />
-          <div class="brand">
-            <div class="title">Калькулятор Калорій</div>
+          <div class="brand brandStack">
+            <div class="title">FIERY</div>
+            <div class="subtitle">CALORIE</div>
           </div>
         </RouterLink>
 
@@ -181,10 +183,15 @@ body{margin:0;font-family:system-ui;background:var(--bg);color:var(--text)}
 }
 .brandLink:hover{opacity:.9}
 
-.logoImg{width:42px;height:42px;border-radius:0;display:block;color:var(--text)}
-.logoSm{width:34px;height:34px;border-radius:0;display:block;color:var(--text)}
+.logoImg{width:42px;height:42px;border-radius:0;display:block;color:var(--text);object-fit:contain;flex-shrink:0;filter:drop-shadow(0 0 6px rgba(255,140,0,.28))}
+.logoSm{width:34px;height:34px;border-radius:0;display:block;color:var(--text);object-fit:contain;flex-shrink:0;filter:drop-shadow(0 0 5px rgba(255,140,0,.24))}
 
 .brand .title{font-weight:950;font-size:18px;line-height:1}
+.brandStack{display:flex;flex-direction:column;justify-content:center;line-height:1;gap:2px}
+.brandStack .title{letter-spacing:.08em;margin:0}
+.brandStack .subtitle{font-weight:900;font-size:14px;letter-spacing:.12em;color:var(--muted);margin:0}
+.brandStackMobile{display:flex;flex-direction:column;gap:2px;line-height:1;justify-content:center}
+.brandStackMobile span{font-size:12px;letter-spacing:.12em;color:var(--muted);margin-top:2px}
 
 /* NAV */
 .nav{
@@ -296,6 +303,7 @@ body{margin:0;font-family:system-ui;background:var(--bg);color:var(--text)}
 
 /* footer brand: same as header but smaller title */
 .brandLinkFooter .brand .title{font-size:16px}
+.brandLinkFooter .brandStack .subtitle{font-size:12px}
 
 /* right footer nav */
 .footerNav{
