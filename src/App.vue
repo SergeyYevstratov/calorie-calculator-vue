@@ -18,7 +18,7 @@
         <nav class="nav desktopNav">
           <RouterLink to="/auth" class="navbtn" v-if="!user">Увійти</RouterLink>
           <RouterLink to="/" class="navbtn">Калькулятор</RouterLink>
-          <RouterLink to="/info" class="navbtn">Пояснення</RouterLink>
+          <RouterLink to="/info" class="navbtn">Довідка</RouterLink>
 
           <button
             class="navbtn icon"

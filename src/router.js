@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+
 import Home from './views/Home.vue'
 import About from './views/About.vue'
 import Auth from './views/Auth.vue'
@@ -15,4 +16,5 @@ const router = createRouter({
 })
 
 export default router
+
 

@@ -45,14 +45,14 @@
 
 
     <button class="primary" @click="apply">{{ justUpdated ? 'Оновлено ✅' : 'Оновити результати' }}</button>
-    <p class="hint">Порада: натисни “Пояснення”, щоб подивитись формули.</p>
+    <p class="hint">Порада: натисни “Довідка”, щоб подивитись формули.</p>
   </section>
 
   <!-- 2 -->
   <section class="card">
     <h2 class="rowTitle">
       <span><span class="step">2</span> Твої результати</span>
-      <RouterLink class="link" to="/info">Пояснення</RouterLink>
+      <RouterLink class="link" to="/info">Довідка</RouterLink>
     </h2>
 
     <div class="kpi">
@@ -81,7 +81,7 @@
 
     <div class="goalBox">
       <div class="goalTitle">Рекомендована добова норма</div>
-      <div class="goalValue">{{ tdee }} ккал</div>
+      <div class="goalValue">{{ target }} ккал</div>
       <div class="goalSub">Ціль: {{ goalText }}</div>
     </div>
 
