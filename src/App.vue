@@ -60,7 +60,7 @@
 
         <div class="drawerLinks">
           <RouterLink to="/" class="dLink" @click="mobileOpen=false">Калькулятор</RouterLink>
-          <RouterLink to="/info" class="dLink" @click="mobileOpen=false">Пояснення</RouterLink>
+          <RouterLink to="/info" class="dLink" @click="mobileOpen=false">Довідка</RouterLink>
           <RouterLink to="/auth" class="dLink" v-if="!user" @click="mobileOpen=false">Увійти / Реєстрація</RouterLink>
           <button class="dLink" v-if="user" @click="doLogout(); mobileOpen=false">Вийти</button>
         </div>
